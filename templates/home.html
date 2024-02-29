@@ -3,17 +3,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-Hi {{ user.username }}!
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-</form>
+<div>
+    {% if user.is_authenticated %}
+    <h1>
+        Hi {{ user.username }}!
+    
+    </h1>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-warning" type="submit">Logout</button>
+    </form>
+    <p><a class="btn btn-info" href="{% url 'password_reset' %}">Reset Password</a></p>
+    
+    {% else %}
+    <h1>Você não está logado :</h1>
+    <a class="btn btn-success" href="{% url 'login' %}">Login</a>
+    <br><br><br>
+    <h1>Primeiro Acesso :</h1>
+    <p><a class="btn btn-info" href="{% url 'password_reset' %}">Registrar</a></p>
+    {% endif %}
+    
+    
 
-{% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a>
-{% endif %}
+</div>
 
-<p><a href="{% url 'password_reset' %}">Reset Password</a></p>
 {% endblock %}
