@@ -1,0 +1,14 @@
+lira_boletim_dado_confirm_delete.html:
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Confirmar exclusão de "{{ object }}"</h2>
+<p>Tem certeza de que deseja excluir este item? Essa ação não poderá ser desfeita.</p>
+<form method="post">
+    {% csrf_token %}
+    <p>Deseja continuar?</p>
+    <button type="submit">Sim, excluir</button>
+    <a href="{% url 'lira_boletim_list' %}">Não, cancelar</a>
+</form>
+{% endblock %}

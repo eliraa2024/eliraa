@@ -1,0 +1,49 @@
+{% extends 'myapp/bairro_list.html' %}
+
+{% block content %}
+{% for lira in object_list %}
+{% if model == 'Imovel' %}
+<tr>
+    <td>{{ lira.numero }}</td>
+    <td>{{ lira.complemento }}</td>
+    <td>{{ lira.quarteirao }}</td>
+    <td>{{ lira.rua }}</td>
+    <td>
+        <a href="{% url 'imovel_update' imovel.id%}">Update</a>
+        <a href="{% url 'imovel_delete' imovel.id %}">Delete</a>
+    </td>
+</tr>
+{% elif model == 'LiraBoletim' %}
+<tr>
+    <td>{{ lira.bairro }}</td>
+    <td>{{ lira.num_quart }}</td>
+    <td>{{ lira.num_imoveis }}</td>
+    <td>{{ lira.extrato }}</td>
+    <td>
+        <a href="{% url 'liraboletim_update' liraboletim.id %}">Update</a>
+        <a href="{% url 'liraboletim_delete' liraboletim.id %}">Delete</a>
+    </td>
+</tr>
+{% elif model == 'LiraBoletimDado' %}
+<tr>
+    <td>{{ lira.boletim }}</td>
+    <td>{{ lira.quart }}</td>
+    <td>{{ lira.rua }}</td>
+    <td>{{ lira.numero }}</td>
+    <td>{{ lira.complemento }}</td>
+    <td>{{ lira.tipo }}</td>
+    <td>{{ lira.a1 }}</td>
+    <td>{{ lira.a2 }}</td>
+    <td>{{ lira.b }}</td>
+    <td>{{ lira.c }}</td>
+    <td>{{ lira.d1 }}</td>
+    <td>{{ lira.d2 }}</td>
+    <td>{{ lira.num_tubitos }}</td>
+    <td>
+        <a href="{% url 'liraboletimdado_update' liraboletimdado.id %}">Update</a>
+        <a href="{% url 'liraboletimdado_delete' liraboletimdado.id %}">Delete</a>
+    </td>
+</tr>
+{% endif %}
+{% endfor %}
+{% endblock %}

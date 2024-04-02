@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lira Boletims</h1>
+<a href="{% url 'lira_boletim_create' %}">Create New Lira Boletim</a>
+<ul>
+    {% for lira_boletim in object_list %}
+    <li>
+        <a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

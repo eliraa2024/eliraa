@@ -1,0 +1,43 @@
+from .views import (LiraBoletim, liraboletim_detail, BairroListView, BairroCreateView, BairroUpdateView, BairroDeleteView,LiraBoletimListView,
+    LiraBoletimCreateView,
+    LiraBoletimUpdateView,
+    LiraBoletimDeleteView,
+    LiraBoletimDadoListView,
+    LiraBoletimDadoCreateView,
+    LiraBoletimDadoUpdateView,
+    LiraBoletimDadoDeleteView,
+    lira_boletim_dado_detail)
+
+from django.urls import path
+
+urlpatterns = [
+    path('index', LiraBoletim.as_view(), name='index'),
+     ################# Bairro
+    path('bairro', BairroListView.as_view(), name='bairro_list'),
+    path('bairro/create/', BairroCreateView.as_view(), name='bairro_create'),
+    path('bairro/<int:pk>/update/',
+         BairroUpdateView.as_view(), name='bairro_update'),
+    path('bairro/<int:pk>/delete/',
+         BairroDeleteView.as_view(), name='bairro_delete'),
+     ################### Lira boetim
+    path('lira-boletim/', LiraBoletimListView.as_view(), name='lira_boletim_list'),
+    path('lira-boletim/create/', LiraBoletimCreateView.as_view(),
+         name='lira_boletim_create'),
+    path('lira-boletim/<int:pk>/update/',
+         LiraBoletimUpdateView.as_view(), name='lira_boletim_update'),
+    path('lira-boletim/<int:pk>/delete/',
+         LiraBoletimDeleteView.as_view(), name='lira_boletim_delete'),
+    path('lira-boletim/<int:pk>', liraboletim_detail,
+         name='liraboletim_detail'),
+     ######### Lira boletim dados
+    path('lira-boletim-dados/<str:pk>', LiraBoletimDadoListView,
+         name='lira_boletim_dado_list'),
+    path('lira-boletim-dado/create/<str:pk>', LiraBoletimDadoCreateView.as_view(),
+         name='lira_boletim_dado_create'),
+    path('lira-boletim-dado/<str:pk>/update/',
+         LiraBoletimDadoUpdateView.as_view(), name='lira_boletim_dado_update'),
+    path('lira-boletim-dado/<str:pk>/delete/',
+         LiraBoletimDadoDeleteView.as_view(), name='lira_boletim_dado_delete'),
+    path('lira-boletim-dado/<str:pk>/', lira_boletim_dado_detail,
+         name='lira_boletim_dado_detail'),
+]

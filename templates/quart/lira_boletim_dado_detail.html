@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Lira Boletim Data Details</h1>
+<p><strong>Boletim:</strong> {{ lira_boletim_dado.boletim }}</p>
+<p><strong>Quart:</strong> {{ lira_boletim_dado.quart }}</p>
+<p><strong>Rua:</strong> {{ lira_boletim_dado.rua }}</p>
+<p><strong>Numero:</strong> {{ lira_boletim_dado.numero }}</p>
+<p><strong>Complemento:</strong> {{ lira_boletim_dado.complemento }}</p>
+<p><strong>Tipo:</strong> {{ lira_boletim_dado.tipo }}</p>
+<p><strong>A1:</strong> {{ lira_boletim_dado.a1 }}</p>
+<p><strong>A2:</strong> {{ lira_boletim_dado.a2 }}</p>
+<p><strong>B:</strong> {{ lira_boletim_dado.b }}</p>
+<p><strong>C:</strong> {{ lira_boletim_dado.c }}</p>
+<p><strong>D1:</strong> {{ lira_boletim_dado.d1 }}</p>
+<p><strong>D2:</strong> {{ lira_boletim_dado.d2 }}</p>
+<a href="{% url 'lira_boletim_dado_update' pk=lira_boletim_dado.id_dado %}">Edit</a>
+<a href="{% url 'lira_boletim_dado_delete' pk=lira_boletim_dado.id_dado %}">Delete</a>
+{% endblock %}

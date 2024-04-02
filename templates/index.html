@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div>
+    <div class="container">
+        <div>
+
+
+        </div>
+        <div>
+            <h1>Lista de boletins do lira</h1>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+
+                    <th scope="col">Bairro</th>
+                    <th scope="col">Num de quart.</th>
+                    <th scope="col">Num de imov.</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Ace</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in liraboletim_list %}
+                <tr>
+                    <th scope="row">{{ a.bairro }}</th>
+                    <td>{{ a.num_quart}}</td>
+                    <td>{{ a.num_imoveis}}</td>
+                    <td>{{ a.data}}</td>
+                    <td>{{ a.usuario}}</td>
+                    <td>
+                        <a href="liraboletim_detail/{{a.id}}" class="btn btn-primary">Detalhes</a>
+                        <a href="{% url 'liraboletim_detail' a.id %}" class="btn btn-primary">Detalhes2</a>
+                    </td>
+                </tr>
+                <!-- If object_list is empty -->
+                {% empty %}
+                <h1>No objects Find</h1>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

@@ -9,19 +9,23 @@
             <ul class="navbar-nav me-auto ">
                 {% if user.is_authenticated %}
                 <li class="nav-item " data-toggle="pill">
-                    <a class="nav-link" href="/quarter">Home
+                    <a class="nav-link" href="">Home
 
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="pill">
-                    <a class="nav-link" href="/quarter/create">Create</a>
+                    <a class="nav-link" href="">Create</a>
                 </li>
                 <li class="nav-item" data-toggle="pill">
-                    <a class="nav-link" href="/sobre">Sobre</a>
+                    <a class="nav-link" href="">Sobre</a>
                 </li>
 
                 <li class="nav-item " data-toggle="pill">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success nav-link" type="submit">Logout</button>
+                    </form>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Hi {{ user.username }}!</a>

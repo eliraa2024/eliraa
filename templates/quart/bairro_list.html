@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Bairros</h1>
+<a href="{% url 'bairro_create' %}">Create new Bairro</a>
+<table>
+    <thead>
+        <tr>
+            <th>Sigla</th>
+            <th>Nome</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bairro in object_list %}
+        <tr>
+            <td>{{ bairro.sigla }}</td>
+            <td>{{ bairro.nome }}</td>
+            <td>
+                <a href="{% url 'bairro_update' bairro.id %}">Update</a>
+                <a href="{% url 'bairro_delete' bairro.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
