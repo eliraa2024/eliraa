@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Lira Boletims</h1>
+<h1>Lista de Boletins</h1>
 <a href="{% url 'lira_boletim_create' %}">Create New Lira Boletim</a>
 <ul>
     {% for lira_boletim in object_list %}
     <li>
-        <a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}</a>
+        <a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}--{{lira_boletim.id_boletim}}</a>
+        <a href="{% url 'lira_boletim_update' lira_boletim.id_boletim %}">Editar</a>
+        <a href="{% url 'lira_boletim_delete' lira_boletim.id_boletim %}">Deletar</a>
     </li>
     {% endfor %}
 </ul>

@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Lira Boletim Data</h1>
-<p>{{ object_list.1.boletim.id_boletim}}</p>
-<a href="{% url 'lira_boletim_dado_create' pk=object_list.1.boletim.id_boletim %}">Create New Lira Boletim Data</a>
+<h1>Lista de Dados do Boletim {{ pk }}</h1>
+
+
+<a href="{% url 'lira_boletim_dado_create' pk %}">Create New Lira Boletim Data</a>
 <ul>
     {% for lira_boletim_dado in object_list %}
     <li>
+
         <a href="{% url 'lira_boletim_dado_detail' lira_boletim_dado.id_dado %}">{{ lira_boletim_dado }}</a>
-        <p>{{ lira_boletim_dado.boletim.id_boletim }}</p>
+        Quart: {{ lira_boletim_dado.quart }} End: {{ lira_boletim_dado.rua }} Num: {{ lira_boletim_dado.numero}} Num de tubitos: {{lira_boletim_dado.num_tubitos }}
+        <a href="{% url 'lira_boletim_dado_update' lira_boletim_dado.id_dado %}">Editar</a>
+        <a href="{% url 'lira_boletim_dado_delete' lira_boletim_dado.id_dado %}">Deletar</a>
     </li>
     {% endfor %}
-    
+
 </ul>
 {% endblock %}

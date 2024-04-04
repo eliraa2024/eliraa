@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from uuid import uuid4
 
-# Create your models here.
+
 class Bairro(models.Model):
     sigla = models.CharField(max_length=2, unique=True)
     nome = models.CharField(max_length=25, unique=True)
@@ -17,38 +17,10 @@ class Rua(models.Model):
     nome = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return self.nome    
-
-class Quarteirao(models.Model):
-    bairro = models.ForeignKey(
-        Bairro, related_name='bairro', on_delete=models.DO_NOTHING)
-    numero = models.CharField(max_length=3)
-
-    class Meta:
-        ordering = ['numero']
-        verbose_name_plural = 'Quarteiroes'
-
-    def __str__(self):
-        return str(self.bairro)+'_'+str(self.numero)
+        return self.nome  
+     
 
 TIPO_IMOVEL = [("tb", "tb"), ("out", "outros")]
-
-class Imovel(models.Model):
-    numero = models.CharField(max_length=4)
-    complemento = models.CharField(max_length=6, blank=True)
-    tipo = models.CharField(choices=TIPO_IMOVEL, max_length=6)
-    quarteirao = models.OneToOneField(
-        Quarteirao, related_name='quarteirao', unique=True, on_delete=models.DO_NOTHING)
-    lado = models.IntegerField()
-    rua = models.OneToOneField(
-        Rua, related_name='rua', unique=True, on_delete=models.DO_NOTHING)
-    
-    class Meta:
-        ordering = ['id']
-
-    def __str__(self):
-        return str(self.quarteirao)+'_'+self.numero+'_'+self.complemento
-
 
 class LiraBoletim(models.Model):
     id_boletim = models.UUIDField(
@@ -61,19 +33,20 @@ class LiraBoletim(models.Model):
     data = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(
         User, related_name='usuario_lira', on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return str(self.usuario)+'_'+str(self.id_boletim)
+        return str(self.usuario)+'_'+str(self.created_at)
     
 
 class LiraBoletimDado(models.Model):
     id_dado = models.UUIDField(
         primary_key=True, default=uuid4, editable=False)
     boletim = models.ForeignKey(LiraBoletim, related_name='lira_boletim', on_delete=models.DO_NOTHING)
-    quart = models.ForeignKey(
-        Quarteirao, related_name='quart_lira', on_delete=models.DO_NOTHING)
+    quart = models.CharField(max_length=6)
     rua = models.ForeignKey(Rua, related_name='rua_lira', on_delete=models.DO_NOTHING)
-    numero = models.CharField(max_length=4)
+    numero = models.CharField(max_length=6)
     complemento = models.CharField(max_length=6, blank=True)
     tipo = models.CharField(choices=TIPO_IMOVEL, max_length=6)
     a1 = models.IntegerField(default=0)
@@ -90,4 +63,36 @@ class LiraBoletimDado(models.Model):
         return num_tubitos
 
     def __str__(self):
-        return str(self.boletim)+'_'+str(self.id_dado)
+        return str(self.quart)+'_'+str(self.numero)+'_'+str(self.complemento)
+
+
+'''
+class Quarteirao(models.Model):
+    bairro = models.ForeignKey(
+        Bairro, related_name='bairro', on_delete=models.DO_NOTHING)
+    numero = models.CharField(max_length=3)
+
+    class Meta:
+        ordering = ['numero']
+        verbose_name_plural = 'Quarteiroes'
+
+    def __str__(self):
+        return str(self.bairro)+'_'+str(self.numero)
+
+
+class Imovel(models.Model):
+    numero = models.CharField(max_length=4)
+    complemento = models.CharField(max_length=6, blank=True)
+    tipo = models.CharField(choices=TIPO_IMOVEL, max_length=6)
+    quarteirao = models.OneToOneField(
+        Quarteirao, related_name='quarteirao', unique=True, on_delete=models.DO_NOTHING)
+    lado = models.IntegerField()
+    rua = models.OneToOneField(
+        Rua, related_name='rua', unique=True, on_delete=models.DO_NOTHING)
+    
+    class Meta:
+        ordering = ['id']
+
+    def __str__(self):
+        return str(self.quarteirao)+'_'+self.numero+'_'+self.complemento
+'''
