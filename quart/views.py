@@ -36,6 +36,23 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
     model = Boletim
     template_name = 'quart/lira_boletim_list.html'
 
+    def get_queryset(self):
+        u = self.request.user
+
+        # listagem para os chefes
+        if u.is_staff == True and u.is_superuser == False:
+            print('STAFF')
+            # lembrar de trocar usuaraio por chefe
+            return Boletim.objects.filter(usuario=u).order_by('bairro')
+        # listagem para o digitador 
+        elif u.is_staff == True and u.is_superuser == True:
+            print('SUPER')
+            return Boletim.objects.all().order_by('usuario')
+        # listagem para os ACEs
+        else:
+            print('ACE')
+            return Boletim.objects.filter(usuario=u)
+
 
 class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
     model = Boletim
@@ -84,11 +101,6 @@ def LiraBoletimDadoListView(request, pk):
     template_name = 'quart/lira_boletim_dado_list.html'
     object_list = LiraBoletimDado.objects.filter(boletim=pk)
 
-    print('pk:'+pk)
-    print(type(pk))
-
-    print(object_list)
-    print(type(object_list))
     context = {
         'object_list': object_list,
         'pk': pk
@@ -109,15 +121,12 @@ def LiraBoletimDadoListView(request, pk):
         return super().form_valid(form)'''
 
 
-def LiraBoletimDadoCreateView(request, pk):
-    #liraBoletim = Boletim.objects.filter(id_boletim=pk)
+def LiraBoletimDadoCreateView(request, pk):    
     liraBoletim = get_object_or_404(Boletim,id_boletim=pk)
-    print(liraBoletim)
     if request.method == 'POST':
         form = LiraBoletimDadoForm(data=request.POST)
         if form.is_valid():
             dado = form.save(commit=False)
-            #dado.boletim = liraBoletim[0].id_boletim
             dado.boletim = liraBoletim
             dado.save()
             return redirect('lira_boletim_dado_list', pk)

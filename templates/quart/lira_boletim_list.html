@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Lista de Boletins</h1>
-<a href="{% url 'lira_boletim_create' %}">Create New Lira Boletim</a>
-<ul>
-    {% for lira_boletim in object_list %}
-    <li>
-        <a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}--{{lira_boletim.id_boletim}}</a>
-        <a href="{% url 'lira_boletim_update' lira_boletim.id_boletim %}">Editar</a>
-        <a href="{% url 'lira_boletim_delete' lira_boletim.id_boletim %}">Deletar</a>
-    </li>
-    {% endfor %}
-</ul>
+
+<section class="container ">
+    <h1 class="text-uppercase text-center">Lista de Boletins</h1>
+    <a class='btn btn-secondary'  href="{% url 'lira_boletim_create' %}">Create New Lira Boletim</a>
+</section>
+
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Boletim</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lira_boletim in object_list %}
+            <tr>
+                <th scope="row"><a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}_-_{{lira_boletim.id_boletim}}</a></th>                
+                <td>
+                    <a type="submit" class="btn btn-warning" href="{% url 'lira_boletim_update' lira_boletim.id_boletim %}" method="POST">Editar</a>
+                    <a type="submit" class="btn btn-danger" href="{% url 'lira_boletim_delete' lira_boletim.id_boletim %}" method="POST">Exluir</a>
+                </td>
+            </tr>
+            <!-- If object_list is empty -->
+            {% empty %}
+            <h1>No objects Find</h1>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

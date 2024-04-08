@@ -10,7 +10,7 @@
     <li>
 
         <a href="{% url 'lira_boletim_dado_detail' lira_boletim_dado.id_dado %}">{{ lira_boletim_dado }}</a>
-        Quart: {{ lira_boletim_dado.quart }} End: {{ lira_boletim_dado.rua }} Num: {{ lira_boletim_dado.numero}} Num de tubitos: {{lira_boletim_dado.num_tubitos }}
+        Quart: {{ lira_boletim_dado.quart }} End: {{ lira_boletim_dado.rua }} Num do imóvel: {{ lira_boletim_dado.numero}} Num de tubitos: {{lira_boletim_dado.num_tubitos }}
         <a href="{% url 'lira_boletim_dado_update' lira_boletim_dado.id_dado %}">Editar</a>
         <a href="{% url 'lira_boletim_dado_delete' lira_boletim_dado.id_dado %}">Deletar</a>
     </li>
