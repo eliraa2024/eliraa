@@ -7,30 +7,35 @@
         </button>
         <div class="collapse navbar-collapse " id="navbarColor02">
             <ul class="navbar-nav me-auto ">
-                {% if user.is_authenticated %}
-                <li class="nav-item " data-toggle="pill">
-                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Home
 
-                    </a>
+                {% if user.is_authenticated and user.is_staff is False %}
+                <li class="nav-item " data-toggle="pill">
+                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Home</a>
                 </li>
                 <li class="nav-item" data-toggle="pill">
-                    <a class="nav-link" href="">Create</a>
-                </li>
-                <li class="nav-item" data-toggle="pill">
-                    <a class="nav-link" href="">Sobre</a>
-                </li>
-
-                <li class="nav-item " data-toggle="pill">
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-success nav-link" type="submit">Logout</button>
-                    </form>
-
+                    <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">Hi {{ user.username }}!</a>
                 </li>
-
+                
+                {% elif user.is_authenticated and user.is_staff %}
+                <li class="nav-item " data-toggle="pill">
+                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Home</a>                    
+                </li>
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>                
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="{% url 'registrar' %}">registar Ace</a>
+                </li>                
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
+                </li>                
+                <li class="nav-item">
+                    <a class="nav-link" href="">Hi {{ user.username }}!</a>
+                </li>
+                
                 {% else %}
                 <li class="nav-item ">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>
@@ -40,7 +45,17 @@
                 </li>
 
                 {% endif %}
+            </ul>  
 
         </div>
+        <div >
+            {% if user.is_authenticated %}
+            <form class="d-flex" action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="nav-link btn btn-success " type="submit">Logout</button>
+            </form>
+            {% endif %}
+        </div>
+        
     </div>
 </div>

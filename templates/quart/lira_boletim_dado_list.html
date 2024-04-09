@@ -1,20 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Lista de Dados do Boletim {{ pk }}</h1>
+<section class="container ">
+    <h2 class="text-uppercase text-center">Dados de Boletim : {{ pk }}</h2>
+    <a class='btn btn-secondary' href="{% url 'lira_boletim_dado_create' pk  %}">Adicionar Dados no Boletim</a>
+</section>
 
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Quarteirão</th>
+                <th scope="col">Rua</th>
+                <th scope="col">Imovel</th>
+                <th scope="col">Num. Tubitos</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lira_boletim_dado in object_list %}
+            <tr>
+                <th scope="row"><a href="{% url 'lira_boletim_dado_detail' lira_boletim_dado.id_dado %}">{{ lira_boletim_dado }}</a></th>
+                <td>{{ lira_boletim_dado.quart }}</td>
+                <td>{{ lira_boletim_dado.rua }}</td>
+                <td>{{ lira_boletim_dado.numero}}</td>
+                <td>{{lira_boletim_dado.num_tubitos }}</td>                
+                <td>
+                    <a type="submit" class="btn-sm btn-warning "
+                        href="{% url 'lira_boletim_dado_update' lira_boletim_dado.id_dado %}" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-danger "
+                        href="{% url 'lira_boletim_dado_delete' lira_boletim_dado.id_dado %}" method="POST">Exluir</a>
+                </td>
+            </tr>
+            <!-- If object_list is empty -->
+            {% empty %}
+            <h1>No objects Find</h1>
 
-<a href="{% url 'lira_boletim_dado_create' pk %}">Create New Lira Boletim Data</a>
-<ul>
-    {% for lira_boletim_dado in object_list %}
-    <li>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-        <a href="{% url 'lira_boletim_dado_detail' lira_boletim_dado.id_dado %}">{{ lira_boletim_dado }}</a>
-        Quart: {{ lira_boletim_dado.quart }} End: {{ lira_boletim_dado.rua }} Num do imóvel: {{ lira_boletim_dado.numero}} Num de tubitos: {{lira_boletim_dado.num_tubitos }}
-        <a href="{% url 'lira_boletim_dado_update' lira_boletim_dado.id_dado %}">Editar</a>
-        <a href="{% url 'lira_boletim_dado_delete' lira_boletim_dado.id_dado %}">Deletar</a>
-    </li>
-    {% endfor %}
-
-</ul>
 {% endblock %}

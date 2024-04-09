@@ -37,7 +37,7 @@ class LiraBoletim(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return str(self.usuario)+'_'+str(self.created_at)
+        return str(self.usuario)+'_'+str(self.created_at)[:10]
     
 
 class LiraBoletimDado(models.Model):

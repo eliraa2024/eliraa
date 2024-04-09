@@ -9,6 +9,7 @@
 
 <div class="container">
     <table class="table">
+        <caption>Boletins</caption>
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Boletim</th>
@@ -18,10 +19,10 @@
         <tbody>
             {% for lira_boletim in object_list %}
             <tr>
-                <th scope="row"><a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}_-_{{lira_boletim.id_boletim}}</a></th>                
+                <th scope="row"><a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}</a></th>                
                 <td>
-                    <a type="submit" class="btn btn-warning" href="{% url 'lira_boletim_update' lira_boletim.id_boletim %}" method="POST">Editar</a>
-                    <a type="submit" class="btn btn-danger" href="{% url 'lira_boletim_delete' lira_boletim.id_boletim %}" method="POST">Exluir</a>
+                    <a type="submit" class="btn-sm btn-warning" href="{% url 'lira_boletim_update' lira_boletim.id_boletim %}" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-danger" href="{% url 'lira_boletim_delete' lira_boletim.id_boletim %}" method="POST">Exluir</a>
                 </td>
             </tr>
             <!-- If object_list is empty -->
