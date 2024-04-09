@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="container ">
-    <h2 class="text-uppercase text-center">Dados de Boletim : {{ pk }}</h2>
+    <h2 class="text-uppercase text-center">Dados do Boletim : {{ object }}</h2>
     <a class='btn btn-secondary' href="{% url 'lira_boletim_dado_create' pk  %}">Adicionar Dados no Boletim</a>
 </section>
 

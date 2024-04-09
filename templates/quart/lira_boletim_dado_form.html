@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Adicionar Dados{% endblock %}
 
 {% block content %}
-<h1>Create New Lira Boletim Data</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+<div class="row">
+    <div class="col-md-auto mx-auto mt-2 ">
+        <div class="card auth-card">
+            <div class="card-body ">
+                <h2>Adicionar Dados</h2>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+
+                    <input class="btn btn-success" type="submit" value="Adicionar Dados">
+                    <a class="btn btn-secondary" href="{% url 'lira_boletim_list' %}">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
 {% endblock %}

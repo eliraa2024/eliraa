@@ -1,33 +1,61 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin # para cbv
+from django.contrib.auth.decorators import login_required # para fbv
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Bairro, Rua, LiraBoletim as Boletim, LiraBoletimDado
 from .forms import LiraBoletimDadoForm
 
-class BairroListView(ListView):
+class BairroListView(LoginRequiredMixin, ListView):
     model = Bairro
     template_name = 'myapp/bairro_list.html'
 
 
-class BairroCreateView(CreateView):
+class BairroCreateView(LoginRequiredMixin, CreateView):
     model = Bairro
     fields = ['sigla', 'nome']
     template_name = 'quart/bairro_form.html'
     success_url = reverse_lazy('bairro_list')
 
 
-class BairroUpdateView(UpdateView):
+class BairroUpdateView(LoginRequiredMixin, UpdateView):
     model = Bairro
     fields = ['sigla', 'nome']
     template_name = 'quart/bairro_form.html'
     success_url = reverse_lazy('bairro_list')
 
 
-class BairroDeleteView(DeleteView):
+class BairroDeleteView(LoginRequiredMixin, DeleteView):
     model = Bairro
     template_name = 'quart/bairro_confirm_delete.html'
     success_url = reverse_lazy('bairro_list')
+
+################## Rua #########################################
+
+
+class RuaListView(LoginRequiredMixin, ListView):
+    model = Rua
+    template_name = 'rua_list.html'
+
+
+class RuaCreateView(LoginRequiredMixin, CreateView):
+    model = Rua
+    fields = ['nome']
+    template_name = 'rua_form.html'
+    success_url = reverse_lazy('rua_list')
+
+
+class RuaUpdateView(LoginRequiredMixin, UpdateView):
+    model = Rua
+    fields = ['nome']
+    template_name = 'rua_form.html'
+    success_url = reverse_lazy('rua_list')
+
+
+class RuaDeleteView(LoginRequiredMixin, DeleteView):
+    model = Rua
+    template_name = 'rua_confirm_delete.html'
+    success_url = reverse_lazy('rua_list')
 
 
 ################## LiraBoletim #################################
@@ -40,23 +68,21 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
         u = self.request.user
 
         # listagem para os chefes
-        if u.is_staff == True and u.is_superuser == False:
-            print('STAFF')
-            # lembrar de trocar usuaraio por chefe
-            return Boletim.objects.filter(usuario=u).order_by('bairro')
-        # listagem para o digitador 
-        elif u.is_staff == True and u.is_superuser == True:
-            print('SUPER')
+        if u.is_staff == True and u.is_superuser == False: 
+            return Boletim.objects.filter(chefe=u).order_by('bairro')
+        
+        # listagem para o digitador (superusuário)
+        elif u.is_staff == True and u.is_superuser == True:            
             return Boletim.objects.all().order_by('usuario')
+        
         # listagem para os ACEs
         else:
-            print('ACE')
             return Boletim.objects.filter(usuario=u)
 
 
 class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
     model = Boletim
-    fields = ['bairro', 'num_quart', 'num_imoveis', 'extrato']
+    fields = ['bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
     template_name = 'quart/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
@@ -68,12 +94,12 @@ class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
 
 class LiraBoletimUpdateView(LoginRequiredMixin, UpdateView):
     model = Boletim
-    fields = ['bairro', 'num_quart', 'num_imoveis', 'extrato']
+    fields = ['bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
     template_name = 'quart/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
     def form_valid(self, form):
-        form.instance.usuario = self.request.user
+        form.instance.updated_by = self.request.user
         return super().form_valid(form)
 
 
@@ -83,20 +109,20 @@ class LiraBoletimDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('lira_boletim_list')
 
 
+@login_required
+def liraboletim_detail(request, pk):
+    template_name = 'quart/liraboletim_detail.html'
+    boletim = get_object_or_404(Boletim, pk=pk)
+    context = {
+        'boletim': boletim,
+        'pk': pk
+    }
+    return render(request, template_name, context)
+
+
 ################### LiraBoletimDado ##################################
 
-'''class LiraBoletimDadoListView(LoginRequiredMixin, ListView):
-    model = LiraBoletimDado
-    template_name = 'quart/lira_boletim_dado_list.html'
-
-    def get_queryset(self):  # new
-        query = self.request.GET.get('lira_boletim.id_boletim')
-        object_list = LiraBoletimDado.objects.filter(
-            boletim=query)
-
-        return object_list'''
-
-
+@login_required
 def LiraBoletimDadoListView(request, pk):
     template_name = 'quart/lira_boletim_dado_list.html'
     object_list = LiraBoletimDado.objects.filter(boletim=pk)
@@ -108,19 +134,7 @@ def LiraBoletimDadoListView(request, pk):
     return render(request, template_name, context)
 
 
-'''class LiraBoletimDadoCreateView(LoginRequiredMixin, CreateView):
-    model = LiraBoletimDado
-    fields = ['quart', 'rua', 'numero',
-              'complemento', 'tipo', 'a1', 'a2', 'b', 'c', 'd1', 'd2']
-    template_name = 'quart/lira_boletim_dado_form.html'
-    success_url = reverse_lazy('lira_boletim_list')
-
-    def form_valid(self, form):
-        #boletim = {'boletim': pk}
-        form.instance.boletim = pk
-        return super().form_valid(form)'''
-
-
+@login_required
 def LiraBoletimDadoCreateView(request, pk):    
     liraBoletim = get_object_or_404(Boletim,id_boletim=pk)
     if request.method == 'POST':
@@ -150,6 +164,7 @@ class LiraBoletimDadoDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('lira_boletim_list')
 
 
+@login_required
 def lira_boletim_dado_detail(request, pk):
     lira_boletim_dado = get_object_or_404(LiraBoletimDado, pk=pk)
     return render(request, 'quart/lira_boletim_dado_detail.html', {'lira_boletim_dado': lira_boletim_dado})
@@ -158,16 +173,13 @@ def lira_boletim_dado_detail(request, pk):
 # Create your views here.
 
 
-class LiraBoletim(ListView):
+class LiraBoletim(LoginRequiredMixin, ListView):
     model = Boletim
     fields = '__all__'
     template_name = 'index.html'
 
 
-def liraboletim_detail(self, request,  id):
-    template_name = 'quart/liraboletim_detail.html'
-    boletim = get_object_or_404(LiraBoletim, id=id)
-    return render(request, template_name, {'boletim_list': [boletim]})
+
 
 
 '''

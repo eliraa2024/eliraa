@@ -10,7 +10,7 @@
 
         </div>
         <div>
-            <h1>Lista de boletins do lira</h1>
+            <h2>Detalhes do boletim: {{boletim}}</h2>
         </div>
         <table class="table">
             <thead class="thead-dark">
@@ -21,30 +21,31 @@
                     <th scope="col">Num de imov.</th>
                     <th scope="col">Data</th>
                     <th scope="col">Ace</th>
+                    <th scope="col">Chefe</th>
+                    <th scope="col">Modificado por</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {% for a in boletim_list %}
+                
                 <tr>
-                    <th scope="row">{{ a.bairro }}</th>
-                    <td>{{ a.num_quart}}</td>
-                    <td>{{ a.num_imoveis}}</td>
-                    <td>{{ a.data}}</td>
-                    <td>{{ a.usuario}}</td>
+                    <th scope="row">{{ boletim.bairro }}</th>
+                    <td>{{ boletim.num_quart}}</td>
+                    <td>{{ boletim.num_imoveis}}</td>
+                    <td>{{ boletim.data}}</td>
+                    <td>{{ boletim.usuario}}</td>
+                    <td>{{ boletim.chefe}}</td>
+                    <td>{{ boletim.updated_by}}</td>
                     <td>
-                        <a type="submit" class="btn btn-primary" href="{% url 'lira-boletim' a.id %}"
+                        <a type="submit" class="btn btn-primary" href="{% url 'lira_boletim_update' pk %}"
                             method="POST">Editar</a>
-                        <a type="submit" class="btn btn-warning" href="{% url 'liraboletim_detail' a.id %}"
+                        <a type="submit" class="btn btn-warning" href="{% url 'lira_boletim_delete' pk %}"
                             method="POST">Excluir</a>
 
                     </td>
                 </tr>
                 <!-- If object_list is empty -->
-                {% empty %}
-                <h1>No objects Find</h1>
-
-                {% endfor %}
+                
             </tbody>
         </table>
 

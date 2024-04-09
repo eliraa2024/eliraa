@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Registrar Ace{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-auto mx-auto mt-2 ">
         <div class="card auth-card">
             <div class="card-body ">
-                <h2 class="card-title">Criar Ace</h2>
+                <h2 class="card-title">Registrar Ace</h2>
                 <form method="post">
                     {% csrf_token %}
                     {{ form | crispy }}
@@ -16,11 +16,8 @@
                 </form>
             
             </div>
-        </div>
-        
-        
-    </div>
-    
+        </div>       
+    </div>    
 </div>
 
 {% endblock %}

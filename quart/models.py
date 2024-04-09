@@ -34,8 +34,14 @@ class LiraBoletim(models.Model):
     usuario = models.ForeignKey(
         User, related_name='usuario_lira', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
+    updated_at = models.DateTimeField(auto_now=True)    
+    # limit_choices_to={"is_staff": True} para selecionar so os chefes
+    chefe = models.ForeignKey(User, related_name='chefe',
+                              on_delete=models.DO_NOTHING, limit_choices_to={"is_staff": True}, null=True, blank=False)
+    updated_by = models.ForeignKey(
+        User, related_name='modificado_por', on_delete=models.DO_NOTHING, null=True, blank=False)
+
+
     def __str__(self):
         return str(self.usuario)+'_'+str(self.created_at)[:10]
     

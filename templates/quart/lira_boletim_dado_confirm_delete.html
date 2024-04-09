@@ -1,14 +1,27 @@
-lira_boletim_dado_confirm_delete.html:
-
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Deletar Boletim{% endblock %}
 
 {% block content %}
-<h2>Confirmar exclusão de "{{ object }}"</h2>
-<p>Tem certeza de que deseja excluir este item? Essa ação não poderá ser desfeita.</p>
-<form method="post">
-    {% csrf_token %}
-    <p>Deseja continuar?</p>
-    <button type="submit">Sim, excluir</button>
-    <a href="{% url 'lira_boletim_list' %}">Não, cancelar</a>
-</form>
+<div class="row">
+    <div class="col-md-auto mx-auto mt-2 ">
+        <div class="card auth-card">
+            <div class="card-body ">
+                <h2>Quer deletar o dado "{{ object }}" do boletim ?</h2>
+                <p>Tem certeza de que deseja excluir este item? Essa ação não poderá ser desfeita.</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+
+                    <input class="btn btn-danger" type="submit" value="Deletar Boletim">
+                    <a class="btn btn-secondary" href="{% url 'lira_boletim_list' %}">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
 {% endblock %}

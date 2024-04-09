@@ -1,11 +1,27 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Deletar Boletim{% endblock %}
 
 {% block content %}
-<h1>Confirm Delete</h1>
-<p>Are you sure you want to delete "{{ object }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    <input type="submit" value="Confirm">
-</form>
-<a href="{% url 'lira_boletim_list' %}">Cancel</a>
+<div class="row">
+    <div class="col-md-auto mx-auto mt-2 ">
+        <div class="card auth-card">
+            <div class="card-body ">
+                <h2>Deletar boletim</h2>
+                <p>Quer deletar o boletim "{{ object }}"?</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+
+                    <input class="btn btn-danger" type="submit" value="Deletar Boletim">
+                    <a class="btn btn-secondary" href="{% url 'lira_boletim_list' %}">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
 {% endblock %}
