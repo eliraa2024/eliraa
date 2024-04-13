@@ -192,7 +192,7 @@ class CicloList(LoginRequiredMixin, ListView):
 def indice(request, ciclo):
     template_name = 'indice/indice_list.html'
     # ciclo = get_object_or_404(Indice, ciclo=ciclo)
-    c = ciclo
+    #c = Ciclo.objects.filter(ciclo=ciclo)
     indices = Indice.objects.filter(ciclo=ciclo)
     new_indice = None  # indice postado
     if request.method == 'POST':
@@ -201,7 +201,7 @@ def indice(request, ciclo):
             # cria o indice mas não o salva no bd ainda
             new_indice = indice_form.save(commit=False)
             # actrinui o atual indice ao ciclo
-            new_indice.ciclo = c
+            #new_indice.ciclo = c
             # agora salva no bd
             new_indice.save()
 
@@ -209,7 +209,7 @@ def indice(request, ciclo):
         indice_form = IndiceForm()
 
     context = {
-        'ciclo': c,
+        #'ciclo': c,
         'indices': indices,
         'new_indice': new_indice,
         'indice_form': indice_form,

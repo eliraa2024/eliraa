@@ -46,5 +46,5 @@ urlpatterns = [
      ########## Ciclo
      path('ciclos/', CicloList.as_view(), name='ciclo'),
      ########### Mapa
-     path('mapa/<int:ciclo>', mapa_dengue_caico, name='mapa'),
+     path('mapa/<str:ciclo>', mapa_dengue_caico, name='mapa'),
 ]
