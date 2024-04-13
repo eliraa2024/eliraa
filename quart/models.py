@@ -18,11 +18,24 @@ class Rua(models.Model):
 
     def __str__(self):
         return self.nome  
-     
+
+
+class Ciclo(models.Model):
+    ano = models.CharField(max_length=4)
+    ciclo = models.CharField(max_length=10)
+
+    def __str__(self) -> str:
+        return self.ano+'_'+self.ciclo
+
+    class Meta:
+        ordering = ['-ano', '-ciclo']
+
 
 TIPO_IMOVEL = [("tb", "tb"), ("out", "outros")]
 
 class LiraBoletim(models.Model):
+    ciclo = models.ForeignKey(
+        Ciclo, related_name='ciclo_boletim', on_delete=models.DO_NOTHING, null=True, blank=False)
     id_boletim = models.UUIDField(
         primary_key=True, default=uuid4, editable=False)
     bairro = models.ForeignKey(
@@ -72,7 +85,40 @@ class LiraBoletimDado(models.Model):
         return str(self.quart)+'_'+str(self.numero)+'_'+str(self.complemento)
 
 
+class Indice(models.Model):
+    ciclo = models.ForeignKey(Ciclo, related_name='ciclo_indice', on_delete=models.DO_NOTHING)
+    bairro_nome = models.OneToOneField(
+        Bairro, related_name='bairros', unique=True, on_delete=models.DO_NOTHING)
+    indice_bairro = models.DecimalField(
+        max_digits=3, decimal_places=1, null=True, blank=True, default=0)
+
+    def __str__(self):
+        indice = str(self.ciclo)+'_'+str(self.bairro_nome)
+        return indice
+
+    class Meta:
+        ordering = ['bairro_nome']
+
+
 '''
+
+from django.db import models
+
+
+
+class Indice(models.Model):
+    ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE)
+    bairro = models.ForeignKey('Bairro', on_delete=models.CASCADE)
+    indice = models.CharField(max_length=10)
+
+
+
+
+
+
+
+
+
 class Quarteirao(models.Model):
     bairro = models.ForeignKey(
         Bairro, related_name='bairro', on_delete=models.DO_NOTHING)

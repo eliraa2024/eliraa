@@ -6,7 +6,8 @@ from .views import (LiraBoletim, liraboletim_detail, BairroListView, BairroCreat
     LiraBoletimDadoCreateView,
     LiraBoletimDadoUpdateView,
     LiraBoletimDadoDeleteView,
-    lira_boletim_dado_detail)
+    lira_boletim_dado_detail,
+     indice, mapa_dengue_caico, CicloList)
 
 from django.urls import path
 
@@ -40,4 +41,10 @@ urlpatterns = [
          LiraBoletimDadoDeleteView.as_view(), name='lira_boletim_dado_delete'),
     path('lira-boletim-dado/<str:pk>/', lira_boletim_dado_detail,
          name='lira_boletim_dado_detail'),
+     ########## Indice
+     path('indice/<str:ciclo>/', indice, name='indice'),
+     ########## Ciclo
+     path('ciclos/', CicloList.as_view(), name='ciclo'),
+     ########### Mapa
+     path('mapa/<int:ciclo>', mapa_dengue_caico, name='mapa'),
 ]

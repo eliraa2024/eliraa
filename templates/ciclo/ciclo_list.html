@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container ">
+    <h1 class="text-uppercase text-center">Lista de Ciclos</h1>
+    <a class='btn btn-secondary'  href="{% url 'lira_boletim_create' %}">Criar Boletim</a>
+</section>
+
+<div class="container">
+    <table class="table">
+        <caption>Ciclos</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Ciclo</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ciclo in object_list %}
+            <tr>                           
+                <td> {{ ciclo }}</td>
+                <td>
+                    <a type="submit" class="btn-sm btn-secondary" href="{% url 'indice' ciclo.ciclo %}"
+                        method="POST">Detalhes</a>
+                    <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
+                    
+                </td>
+            </tr>
+            <!-- If object_list is empty -->
+            {% empty %}
+            <h1>No objects Find</h1>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

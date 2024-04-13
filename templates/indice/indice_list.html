@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    {% if user.is_anonymous %}
+    <h1>Você não está logado</h1>
+    {% else %}
+    <h1>
+        Olá {{ user.username }}. Este é o Ciclo {{ciclo}} <a href="{% url 'mapa' ciclo  %}" class="btn btn-success">Mapa
+            de calor &rarr;</a>
+    </h1>
+
+    {% endif %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">Id</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Indice</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in indices %}
+            <tr>
+
+                <td>{{ i.id}}</td>
+                <td>{{ i.bairro_nome}}</td>
+                <td>{{ i.indice_bairro }}</td>
+
+
+                <td>
+                    <a type="submit" class="btn btn-warning" href="" method="POST">Editar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <h1>No objects Find</h1>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    {% if user.is_anonymous %}
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-6 offset-md-2">
+            <div class="card auth-card">
+                <div class="card-body">
+                    <h1>Adicionar Índice</h1>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ indice_form | crispy }}
+
+                        <br>
+                        <button class="btn btn-primary" type="submit">Salvar</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    {% endif %}
+
+
+</div>
+
+{% endblock content %}
