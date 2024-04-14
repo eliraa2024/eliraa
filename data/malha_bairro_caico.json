@@ -1,0 +1,15 @@
+{"type":"FeatureCollection","features":[
+{"type":"Feature","properties":{"name":"Acampamento"},"geometry":{"type":"Polygon","coordinates":[[[-37.097500,-6.452838],[-37.102441, -6.456215],[-37.101776, -6.460378],[-37.094368, -6.454236]]]},"id":"AC"},
+{"type":"Feature","properties":{"name":"Nova Descoberta"},"geometry":{"type":"Polygon","coordinates":[[[-37.091278, -6.469149],[-37.094688, -6.476513],[-37.089034, -6.480679],[-37.084013,-6.474666],[-37.081196, -6.470785]]]},"id":"ND"},
+{"type":"Feature","properties":{"name":"Canutos e Filhos"},"geometry":{"type":"Polygon","coordinates":[[[-37.084013,-6.474666],[-37.089034, -6.480679],[-37.087314, -6.482037],[-37.080907, -6.476820]]]},"id":"CF"},
+{"type":"Feature","properties":{"name":"Castelo Branco"},"geometry":{"type":"Polygon","coordinates":[[[-37.081196, -6.470785],[-37.084013,-6.474666],[-37.080907, -6.476820],[-37.077327, -6.472107]]]},"id":"CB"},
+{"type":"Feature","properties":{"name":"Centro"},"geometry":{"type":"Polygon","coordinates":[[[-37.094368, -6.454236],[-37.101776, -6.460378],[-37.099834, -6.464165],[-37.0945,-6.4673],[-37.085827, -6.458535]]]},"id":"CT"},
+{"type":"Feature","properties":{"name":"Jardim Satelite"},"geometry":{"type":"Polygon","coordinates":[[[-37.077327, -6.472107],[-37.080907, -6.476820],[-37.077183, -6.478916],[-37.074189, -6.473413]]]},"id":"JS"},
+{"type":"Feature","properties":{"name":"Joao XXIII"},"geometry":{"type":"Polygon","coordinates":[[[-37.104740, -6.461707],[-37.107155,-6.464589],[ -37.1026,-6.4667],[-37.099834, -6.464165],[-37.101776, -6.460378]]]},"id":"JV"},
+{"type":"Feature","properties":{"name":"Maynard"},"geometry":{"type":"Polygon","coordinates":[[[-37.074189, -6.473413],[-37.077183, -6.478916],[-37.071967, -6.482038],[-37.069555, -6.478466]]]},"id":"MN"},
+{"type":"Feature","properties":{"name":"Itans"},"geometry":{"type":"Polygon","coordinates":[[[-37.069555, -6.478466],[-37.071967, -6.482038],[-37.065289,-6.486286],[-37.052712, -6.483409],[-37.064454, -6.472952]]]},"id":"IT"},
+{"type":"Feature","properties":{"name":"Penedo"},"geometry":{"type":"Polygon","coordinates":[[[-37.085827, -6.458535],[-37.0945,-6.4673],[-37.091278, -6.469149],[-37.081196, -6.470785],[-37.078601,-6.462165]]]},"id":"PN"},
+{"type":"Feature","properties":{"name":"Paraiba"},"geometry":{"type":"Polygon","coordinates":[[[-37.099834, -6.464165],[-37.105253, -6.469126],[-37.094688, -6.476513],[-37.091278, -6.469149]]]},"id":"PB"},
+{"type":"Feature","properties":{"name":"Soledade"},"geometry":{"type":"Polygon","coordinates":[[[-37.105253, -6.469126],[-37.109278, -6.473413],[-37.103176, -6.476013],[-37.1003, -6.4726]]]},"id":"SD"},
+{"type":"Feature","properties":{"name":"Vila Altiva"},"geometry":{"type":"Polygon","coordinates":[[[-37.078601,-6.462165],[-37.081196, -6.470785],[-37.077327, -6.472107],[-37.074189, -6.473413],[-37.069555, -6.478466],[-37.064454, -6.472952]]]},"id":"VA"}
+]} 

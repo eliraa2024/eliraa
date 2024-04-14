@@ -87,8 +87,8 @@ class LiraBoletimDado(models.Model):
 
 class Indice(models.Model):
     ciclo = models.ForeignKey(Ciclo, related_name='ciclo_indice', on_delete=models.DO_NOTHING)
-    bairro_nome = models.OneToOneField(
-        Bairro, related_name='bairros', unique=True, on_delete=models.DO_NOTHING)
+    bairro_nome = models.ForeignKey(
+        Bairro, related_name='bairros', on_delete=models.DO_NOTHING)
     indice_bairro = models.DecimalField(
         max_digits=3, decimal_places=1, null=True, blank=True, default=0)
 

@@ -13,4 +13,4 @@ class IndiceForm(forms.ModelForm):
 
     class Meta:
         model = Indice
-        fields = '__all__'
+        fields = ['bairro_nome', 'indice_bairro']

@@ -1,10 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin # para cbv
-from django.contrib.auth.decorators import login_required # para fbv
+from django.contrib.auth.mixins import LoginRequiredMixin  # para cbv
+from django.contrib.auth.decorators import login_required  # para fbv
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Bairro, Rua, LiraBoletim as Boletim, LiraBoletimDado, Indice, Ciclo
 from .forms import LiraBoletimDadoForm, IndiceForm
+import folium
+
 
 class BairroListView(LoginRequiredMixin, ListView):
     model = Bairro
@@ -68,13 +70,13 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
         u = self.request.user
 
         # listagem para os chefes
-        if u.is_staff == True and u.is_superuser == False: 
+        if u.is_staff == True and u.is_superuser == False:
             return Boletim.objects.filter(chefe=u).order_by('bairro')
-        
+
         # listagem para o digitador (superusuário)
-        elif u.is_staff == True and u.is_superuser == True:            
+        elif u.is_staff == True and u.is_superuser == True:
             return Boletim.objects.all().order_by('usuario')
-        
+
         # listagem para os ACEs
         else:
             return Boletim.objects.filter(usuario=u)
@@ -82,7 +84,7 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
 
 class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
     model = Boletim
-    fields = ['bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
+    fields = ['ciclo','bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
     template_name = 'quart/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
@@ -91,10 +93,9 @@ class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-
 class LiraBoletimUpdateView(LoginRequiredMixin, UpdateView):
     model = Boletim
-    fields = ['bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
+    fields = ['ciclo','bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
     template_name = 'quart/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
@@ -123,7 +124,8 @@ def liraboletim_detail(request, pk):
 ################### LiraBoletimDado ##################################
 
 @login_required
-def LiraBoletimDadoListView(request, pk): # ajeitar: função com letra maiúscula
+# ajeitar: função com letra maiúscula
+def LiraBoletimDadoListView(request, pk):
     template_name = 'quart/lira_boletim_dado_list.html'
     object_list = LiraBoletimDado.objects.filter(boletim=pk)
 
@@ -135,8 +137,8 @@ def LiraBoletimDadoListView(request, pk): # ajeitar: função com letra maiúscu
 
 
 @login_required
-def LiraBoletimDadoCreateView(request, pk):    
-    liraBoletim = get_object_or_404(Boletim,id_boletim=pk)
+def LiraBoletimDadoCreateView(request, pk):
+    liraBoletim = get_object_or_404(Boletim, id_boletim=pk)
     if request.method == 'POST':
         form = LiraBoletimDadoForm(data=request.POST)
         if form.is_valid():
@@ -144,7 +146,7 @@ def LiraBoletimDadoCreateView(request, pk):
             dado.boletim = liraBoletim
             dado.save()
             return redirect('lira_boletim_dado_list', pk)
-    
+
     return render(request, 'quart/lira_boletim_dado_form.html', {
         'form': LiraBoletimDadoForm(),
     })
@@ -187,12 +189,11 @@ class CicloList(LoginRequiredMixin, ListView):
     template_name = 'ciclo/ciclo_list.html'
 
 
-
 ###################### Indice #################################
 def indice(request, ciclo):
     template_name = 'indice/indice_list.html'
     # ciclo = get_object_or_404(Indice, ciclo=ciclo)
-    #c = Ciclo.objects.filter(ciclo=ciclo)
+    c = get_object_or_404(Ciclo, ciclo=ciclo)
     indices = Indice.objects.filter(ciclo=ciclo)
     new_indice = None  # indice postado
     if request.method == 'POST':
@@ -201,7 +202,7 @@ def indice(request, ciclo):
             # cria o indice mas não o salva no bd ainda
             new_indice = indice_form.save(commit=False)
             # actrinui o atual indice ao ciclo
-            #new_indice.ciclo = c
+            new_indice.ciclo = c
             # agora salva no bd
             new_indice.save()
 
@@ -209,7 +210,7 @@ def indice(request, ciclo):
         indice_form = IndiceForm()
 
     context = {
-        #'ciclo': c,
+        'ciclo': c,
         'indices': indices,
         'new_indice': new_indice,
         'indice_form': indice_form,
@@ -218,6 +219,7 @@ def indice(request, ciclo):
     return render(request, template_name, context)
 
 ###################### Mapa ###################################
+
 
 def mapa_dengue_caico(request, ciclo):
     # carregando os dados
@@ -236,7 +238,7 @@ def mapa_dengue_caico(request, ciclo):
         indice.append(float(i.indice_bairro))
     # juntando as duas listas
     dados = list(zip(siglas, indice))
-
+    print(dados)
     # centralizando o mapa
     mapa_caico = folium.Map([-6.4648, -37.0853],
                             zoom_start=14, control_scale=True)
@@ -276,7 +278,8 @@ def mapa_dengue_caico(request, ciclo):
     mapa_caico.save("mapas/mapa_do_ciclo_"+str(ciclo)+".html")
 
     context = {'map': mapa_caico._repr_html_(), 'ciclo': ciclo}
-    return render(request, 'mapcaico.html', context)
+    return render(request, 'mapa/mapcaico.html', context)
+
 
 '''
 

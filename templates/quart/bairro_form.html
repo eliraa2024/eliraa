@@ -4,6 +4,7 @@
 <h1>Create/Update Bairro</h1>
 <form method="post">
     {% csrf_token %}
+    <span>OBS: Sigla com letra maiúscula</span>
     {{ form.as_p }}
     <button type="submit">Save</button>
 </form>
