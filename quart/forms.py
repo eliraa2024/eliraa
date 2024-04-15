@@ -1,6 +1,6 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from .models import LiraBoletimDado, Indice
-from django import forms
+
 
 class LiraBoletimDadoForm(ModelForm):
     class Meta:
@@ -9,8 +9,9 @@ class LiraBoletimDadoForm(ModelForm):
                            'complemento', 'tipo', 'a1', 'a2', 'b', 'c', 'd1', 'd2']
 
 
-class IndiceForm(forms.ModelForm):
-
+class IndiceForm(ModelForm):
     class Meta:
         model = Indice
         fields = ['bairro_nome', 'indice_bairro']
+
+    

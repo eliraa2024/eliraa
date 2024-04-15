@@ -6,30 +6,32 @@ from django.urls import reverse_lazy
 from .models import Bairro, Rua, LiraBoletim as Boletim, LiraBoletimDado, Indice, Ciclo
 from .forms import LiraBoletimDadoForm, IndiceForm
 import folium
+from django.contrib import messages
+from django.forms import ValidationError
 
 
 class BairroListView(LoginRequiredMixin, ListView):
     model = Bairro
-    template_name = 'myapp/bairro_list.html'
+    template_name = 'bairro/bairro_list.html'
 
 
 class BairroCreateView(LoginRequiredMixin, CreateView):
     model = Bairro
     fields = ['sigla', 'nome']
-    template_name = 'quart/bairro_form.html'
+    template_name = 'bairro/bairro_form.html'
     success_url = reverse_lazy('bairro_list')
 
 
 class BairroUpdateView(LoginRequiredMixin, UpdateView):
     model = Bairro
     fields = ['sigla', 'nome']
-    template_name = 'quart/bairro_form.html'
+    template_name = 'bairro/bairro_form.html'
     success_url = reverse_lazy('bairro_list')
 
 
 class BairroDeleteView(LoginRequiredMixin, DeleteView):
     model = Bairro
-    template_name = 'quart/bairro_confirm_delete.html'
+    template_name = 'bairro/bairro_confirm_delete.html'
     success_url = reverse_lazy('bairro_list')
 
 ################## Rua #########################################
@@ -64,7 +66,7 @@ class RuaDeleteView(LoginRequiredMixin, DeleteView):
 
 class LiraBoletimListView(LoginRequiredMixin, ListView):
     model = Boletim
-    template_name = 'quart/lira_boletim_list.html'
+    template_name = 'boletim/lira_boletim_list.html'
 
     def get_queryset(self):
         u = self.request.user
@@ -85,7 +87,7 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
 class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
     model = Boletim
     fields = ['ciclo','bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
-    template_name = 'quart/lira_boletim_form.html'
+    template_name = 'boletim/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
     def form_valid(self, form):
@@ -96,7 +98,7 @@ class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
 class LiraBoletimUpdateView(LoginRequiredMixin, UpdateView):
     model = Boletim
     fields = ['ciclo','bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
-    template_name = 'quart/lira_boletim_form.html'
+    template_name = 'boletim/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
     def form_valid(self, form):
@@ -106,13 +108,13 @@ class LiraBoletimUpdateView(LoginRequiredMixin, UpdateView):
 
 class LiraBoletimDeleteView(LoginRequiredMixin, DeleteView):
     model = Boletim
-    template_name = 'quart/lira_boletim_confirm_delete.html'
+    template_name = 'boletim/lira_boletim_confirm_delete.html'
     success_url = reverse_lazy('lira_boletim_list')
 
 
 @login_required
 def liraboletim_detail(request, pk):
-    template_name = 'quart/liraboletim_detail.html'
+    template_name = 'boletim/liraboletim_detail.html'
     boletim = get_object_or_404(Boletim, pk=pk)
     context = {
         'boletim': boletim,
@@ -124,9 +126,8 @@ def liraboletim_detail(request, pk):
 ################### LiraBoletimDado ##################################
 
 @login_required
-# ajeitar: função com letra maiúscula
-def LiraBoletimDadoListView(request, pk):
-    template_name = 'quart/lira_boletim_dado_list.html'
+def lira_boletim_dado_list_view(request, pk):
+    template_name = 'dado/lira_boletim_dado_list.html'
     object_list = LiraBoletimDado.objects.filter(boletim=pk)
 
     context = {
@@ -137,17 +138,17 @@ def LiraBoletimDadoListView(request, pk):
 
 
 @login_required
-def LiraBoletimDadoCreateView(request, pk):
-    liraBoletim = get_object_or_404(Boletim, id_boletim=pk)
+def lira_boletim_dado_create_view(request, pk):
+    lira_boletim = get_object_or_404(Boletim, id_boletim=pk)
     if request.method == 'POST':
         form = LiraBoletimDadoForm(data=request.POST)
         if form.is_valid():
             dado = form.save(commit=False)
-            dado.boletim = liraBoletim
+            dado.boletim = lira_boletim
             dado.save()
             return redirect('lira_boletim_dado_list', pk)
 
-    return render(request, 'quart/lira_boletim_dado_form.html', {
+    return render(request, 'dado/lira_boletim_dado_form.html', {
         'form': LiraBoletimDadoForm(),
     })
 
@@ -156,29 +157,21 @@ class LiraBoletimDadoUpdateView(LoginRequiredMixin, UpdateView):
     model = LiraBoletimDado
     fields = ['boletim', 'quart', 'rua', 'numero',
               'complemento', 'tipo', 'a1', 'a2', 'b', 'c', 'd1', 'd2']
-    template_name = 'quart/lira_boletim_dado_form.html'
+    template_name = 'dado/lira_boletim_dado_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
 
 class LiraBoletimDadoDeleteView(LoginRequiredMixin, DeleteView):
     model = LiraBoletimDado
-    template_name = 'quart/lira_boletim_dado_confirm_delete.html'
+    template_name = 'dado/lira_boletim_dado_confirm_delete.html'
     success_url = reverse_lazy('lira_boletim_list')
 
 
 @login_required
 def lira_boletim_dado_detail(request, pk):
     lira_boletim_dado = get_object_or_404(LiraBoletimDado, pk=pk)
-    return render(request, 'quart/lira_boletim_dado_detail.html', {'lira_boletim_dado': lira_boletim_dado})
+    return render(request, 'dado/lira_boletim_dado_detail.html', {'lira_boletim_dado': lira_boletim_dado})
 
-
-# Create your views here.
-
-
-class LiraBoletim(LoginRequiredMixin, ListView):
-    model = Boletim
-    fields = '__all__'
-    template_name = 'index.html'
 
 #################### Ciclo ###################################
 
@@ -190,15 +183,17 @@ class CicloList(LoginRequiredMixin, ListView):
 
 
 ###################### Indice #################################
+
+@login_required
 def indice(request, ciclo):
     template_name = 'indice/indice_list.html'
-    # ciclo = get_object_or_404(Indice, ciclo=ciclo)
     c = get_object_or_404(Ciclo, ciclo=ciclo)
     indices = Indice.objects.filter(ciclo=ciclo)
+    
     new_indice = None  # indice postado
-    if request.method == 'POST':
-        indice_form = IndiceForm(data=request.POST)
-        if indice_form.is_valid():
+    '''if request.method == 'POST': 
+        indice_form = IndiceForm(data=request.POST) 
+        if indice_form.is_valid():                       
             # cria o indice mas não o salva no bd ainda
             new_indice = indice_form.save(commit=False)
             # actrinui o atual indice ao ciclo
@@ -207,16 +202,34 @@ def indice(request, ciclo):
             new_indice.save()
 
     else:
-        indice_form = IndiceForm()
-
+        indice_form = IndiceForm()'''
+    print(c)
     context = {
         'ciclo': c,
         'indices': indices,
         'new_indice': new_indice,
-        'indice_form': indice_form,
+        #'indice_form': indice_form,
     }
 
     return render(request, template_name, context)
+
+
+@login_required
+def indice_create_view(request, pk):
+    cic = get_object_or_404(Ciclo, pk=pk)
+    print(pk)
+    if request.method == 'POST':
+        form = IndiceForm(data=request.POST)
+        if form.is_valid():
+            dado = form.save(commit=False)
+            dado.ciclo = cic
+            dado.save()
+            return redirect('indice', cic.id)
+
+    return render(request, 'indice/indice_form.html', {
+        'form': IndiceForm(),
+    })
+
 
 ###################### Mapa ###################################
 

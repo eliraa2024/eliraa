@@ -8,9 +8,11 @@
     <h1>Você não está logado</h1>
     {% else %}
     <h1>
-        Olá {{ user.username }}. Este é o Ciclo {{ciclo}} <a href="{% url 'mapa' ciclo.ciclo  %}" class="btn btn-success">Mapa
-            de calor &rarr;</a>
+        Olá {{ user.username }}. Este é o Ciclo {{ciclo}} 
     </h1>
+
+    <a href="{% url 'indice_create' ciclo.id %}" class="btn btn-secondary"> Adicionar indice</a>
+    <a href="{% url 'mapa' ciclo.ciclo  %}" class="btn btn-success">Mapa de calor &rarr;</a>
 
     {% endif %}
     <table class="table">

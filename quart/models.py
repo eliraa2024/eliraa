@@ -99,6 +99,8 @@ class Indice(models.Model):
     class Meta:
         ordering = ['bairro_nome']
 
+    
+
 
 '''
 

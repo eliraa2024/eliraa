@@ -4,7 +4,7 @@
 
 <section class="container ">
     <h1 class="text-uppercase text-center">Lista de Ciclos</h1>
-    <a class='btn btn-secondary'  href="{% url 'lira_boletim_create' %}">Criar Boletim</a>
+    <a class='btn btn-secondary'  href="{% url 'lira_boletim_create' %}">Criar Ciclo</a>
 </section>
 
 <div class="container">
@@ -21,7 +21,7 @@
             <tr>                           
                 <td> {{ ciclo }}</td>
                 <td>
-                    <a type="submit" class="btn-sm btn-secondary" href="{% url 'indice' ciclo.ciclo %}"
+                    <a type="submit" class="btn-sm btn-secondary" href="{% url 'indice' ciclo.id %}"
                         method="POST">Detalhes</a>
                     <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
                     <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
