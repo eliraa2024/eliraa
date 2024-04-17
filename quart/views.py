@@ -1,3 +1,4 @@
+from itertools import count
 from django.contrib.auth.mixins import LoginRequiredMixin  # para cbv
 from django.contrib.auth.decorators import login_required  # para fbv
 from django.shortcuts import render, get_object_or_404, redirect
@@ -73,7 +74,7 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
 
         # listagem para os chefes
         if u.is_staff == True and u.is_superuser == False:
-            return Boletim.objects.filter(chefe=u).order_by('bairro')
+            return Boletim.objects.filter(chefe=u).order_by('-created_at')
 
         # listagem para o digitador (superusuário)
         elif u.is_staff == True and u.is_superuser == True:
@@ -86,7 +87,8 @@ class LiraBoletimListView(LoginRequiredMixin, ListView):
 
 class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
     model = Boletim
-    fields = ['ciclo','bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
+    fields = ['ciclo', 'bairro', 'num_quart',
+              'num_imoveis', 'extrato', 'chefe']
     template_name = 'boletim/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
@@ -97,7 +99,8 @@ class LiraBoletimCreateView(LoginRequiredMixin, CreateView):
 
 class LiraBoletimUpdateView(LoginRequiredMixin, UpdateView):
     model = Boletim
-    fields = ['ciclo','bairro', 'num_quart', 'num_imoveis', 'extrato', 'chefe']
+    fields = ['ciclo', 'bairro', 'num_quart',
+              'num_imoveis', 'extrato', 'chefe']
     template_name = 'boletim/lira_boletim_form.html'
     success_url = reverse_lazy('lira_boletim_list')
 
@@ -128,9 +131,27 @@ def liraboletim_detail(request, pk):
 @login_required
 def lira_boletim_dado_list_view(request, pk):
     template_name = 'dado/lira_boletim_dado_list.html'
+    boletim = get_object_or_404(Boletim, pk=pk)
     object_list = LiraBoletimDado.objects.filter(boletim=pk)
 
+    # Soma todos os tubitos do boletim
+    tubitos_total = 0
+    for a in object_list:
+        tubitos_total += a.num_tubitos
+
+    # banco de dados não reconheceu o distinct, 
+    # metodo ste retorna uma tupla, o len conta elementos da tupla
+    quarteiroes = len(set(object_list.values_list('quart')))
+
+    # Conta quandos elementos na lista
+    # Atualiza/salva o numero de imoveis
+    boletim.num_imoveis = len(object_list)
+    boletim.save()
+
     context = {
+        'quarteiroes': quarteiroes,
+        'tubitos_total': tubitos_total,
+        'boletim': boletim,
         'object_list': object_list,
         'pk': pk
     }
@@ -182,6 +203,12 @@ class CicloList(LoginRequiredMixin, ListView):
     template_name = 'ciclo/ciclo_list.html'
 
 
+class CicloCreate(LoginRequiredMixin, CreateView):
+    model = Ciclo
+    fields = '__all__'
+    template_name = 'ciclo/ciclo_form.html'
+
+
 ###################### Indice #################################
 
 @login_required
@@ -189,7 +216,7 @@ def indice(request, ciclo):
     template_name = 'indice/indice_list.html'
     c = get_object_or_404(Ciclo, ciclo=ciclo)
     indices = Indice.objects.filter(ciclo=ciclo)
-    
+
     new_indice = None  # indice postado
     '''if request.method == 'POST': 
         indice_form = IndiceForm(data=request.POST) 
@@ -208,7 +235,7 @@ def indice(request, ciclo):
         'ciclo': c,
         'indices': indices,
         'new_indice': new_indice,
-        #'indice_form': indice_form,
+        # 'indice_form': indice_form,
     }
 
     return render(request, template_name, context)

@@ -15,7 +15,8 @@
     <a href="{% url 'mapa' ciclo.ciclo  %}" class="btn btn-success">Mapa de calor &rarr;</a>
 
     {% endif %}
-    <table class="table">
+    <table class="table table-striped">
+        <caption>Indices</caption>
         <thead class="thead-dark">
             <tr>
 
@@ -35,7 +36,8 @@
 
 
                 <td>
-                    <a type="submit" class="btn btn-warning" href="" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
                 </td>
             </tr>
             {% empty %}
@@ -43,31 +45,7 @@
             {% endfor %}
 
         </tbody>
-    </table>
-    {% if user.is_anonymous %}
-
-    {% else %}
-    <div class="row">
-        <div class="col-md-6 offset-md-2">
-            <div class="card auth-card">
-                <div class="card-body">
-                    <h1>Adicionar Índice</h1>
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ indice_form | crispy }}
-
-                        <br>
-                        <button class="btn btn-primary" type="submit">Salvar</button>
-                    </form>
-                </div>
-            </div>
-
-
-        </div>
-
-    </div>
-    {% endif %}
-
+    </table>    
 
 </div>
 

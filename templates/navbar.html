@@ -10,7 +10,11 @@
 
                 {% if user.is_authenticated and user.is_staff is False %}
                 <li class="nav-item " data-toggle="pill">
-                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Home</a>
+                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Boletins</a>
+                </li>
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="{% url 'ciclo' %}">Ciclos</a>
+                </li>
                 </li>
                 <li class="nav-item" data-toggle="pill">
                     <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
@@ -21,7 +25,11 @@
                 
                 {% elif user.is_authenticated and user.is_staff %}
                 <li class="nav-item " data-toggle="pill">
-                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Home</a>                    
+                    <a class="nav-link" href="{% url 'lira_boletim_list' %}">Boletins</a>
+                </li>
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="{% url 'ciclo' %}">Ciclos</a>
+                </li>
                 </li>
                 <li class="nav-item" data-toggle="pill">
                     <a class="nav-link" href="/admin">Admin</a>

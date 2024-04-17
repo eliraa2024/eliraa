@@ -1,16 +1,4 @@
-from .views import (liraboletim_detail, BairroListView, BairroCreateView, BairroUpdateView, BairroDeleteView, LiraBoletimListView,
-                    LiraBoletimCreateView,
-                    LiraBoletimUpdateView,
-                    LiraBoletimDeleteView,
-                    lira_boletim_dado_list_view,
-                    lira_boletim_dado_create_view,
-                    LiraBoletimDadoUpdateView,
-                    LiraBoletimDadoDeleteView,
-                    lira_boletim_dado_detail,
-                    indice,
-                    indice_create_view,
-                    mapa_dengue_caico,
-                    CicloList)
+from .views import *
 
 from django.urls import path
 
@@ -48,6 +36,7 @@ urlpatterns = [
     path('indice/create/<str:pk>/', indice_create_view, name='indice_create'),
     # Ciclo
     path('ciclos/', CicloList.as_view(), name='ciclo'),
+    path('ciclos/create/', CicloCreate.as_view(), name='ciclo_create'),
     # Mapa
     path('mapa/<str:ciclo>', mapa_dengue_caico, name='mapa'),
 ]

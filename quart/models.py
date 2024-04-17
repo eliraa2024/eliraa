@@ -58,6 +58,10 @@ class LiraBoletim(models.Model):
     def __str__(self):
         return str(self.usuario)+'_'+str(self.created_at)[:10]
     
+    class Meta:
+        ordering = ['-created_at']
+
+        
 
 class LiraBoletimDado(models.Model):
     id_dado = models.UUIDField(
@@ -100,53 +104,3 @@ class Indice(models.Model):
         ordering = ['bairro_nome']
 
     
-
-
-'''
-
-from django.db import models
-
-
-
-class Indice(models.Model):
-    ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE)
-    bairro = models.ForeignKey('Bairro', on_delete=models.CASCADE)
-    indice = models.CharField(max_length=10)
-
-
-
-
-
-
-
-
-
-class Quarteirao(models.Model):
-    bairro = models.ForeignKey(
-        Bairro, related_name='bairro', on_delete=models.DO_NOTHING)
-    numero = models.CharField(max_length=3)
-
-    class Meta:
-        ordering = ['numero']
-        verbose_name_plural = 'Quarteiroes'
-
-    def __str__(self):
-        return str(self.bairro)+'_'+str(self.numero)
-
-
-class Imovel(models.Model):
-    numero = models.CharField(max_length=4)
-    complemento = models.CharField(max_length=6, blank=True)
-    tipo = models.CharField(choices=TIPO_IMOVEL, max_length=6)
-    quarteirao = models.OneToOneField(
-        Quarteirao, related_name='quarteirao', unique=True, on_delete=models.DO_NOTHING)
-    lado = models.IntegerField()
-    rua = models.OneToOneField(
-        Rua, related_name='rua', unique=True, on_delete=models.DO_NOTHING)
-    
-    class Meta:
-        ordering = ['id']
-
-    def __str__(self):
-        return str(self.quarteirao)+'_'+self.numero+'_'+self.complemento
-'''

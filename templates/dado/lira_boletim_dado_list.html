@@ -2,15 +2,21 @@
 
 {% block content %}
 <section class="container ">
-    <h2 class="text-uppercase text-center">Dados do Boletim : {{ object }}</h2>
-    <a class='btn btn-secondary' href="{% url 'lira_boletim_dado_create' pk  %}">Adicionar Dados no Boletim</a>
+    <h2 class="text-uppercase text-center">Dados do Boletim : {{ boletim }} 
+        <a class='btn btn-secondary' href="{% url 'lira_boletim_dado_create' pk  %}">Adicionar Dados no Boletim</a>
+    </h2>
+    <strong>Bairro:</strong> {{ boletim.bairro }} <strong></strong>Extrato: {{boletim.extrato }}   
+    <strong>Numero de imóveis :</strong> {{ object_list.count }} <strong>Numero de tubitos :</strong> {{ tubitos_total }}   
+    <strong>Numero de quarteirões :</strong> {{ quarteiroes }}
+
 </section>
 
 <div class="container">
     <table class="table table-striped">
+        <caption>Dados do Boletim</caption>
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
+                <th scope="col">Imóvel</th>
                 <th scope="col">Quarteirão</th>
                 <th scope="col">Rua</th>
                 <th scope="col">Imovel</th>
