@@ -4,7 +4,9 @@
 
 <section class="container ">
     <h1 class="text-uppercase text-center">Lista de Ciclos</h1>
+    {% if user.is_authenticated and user.is_superuser is True %}
     <a class='btn btn-secondary'  href="{% url 'ciclo_create' %}">Criar Ciclo</a>
+    {% endif %}
 </section>
 
 <div class="container">

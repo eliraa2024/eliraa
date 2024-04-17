@@ -7,13 +7,16 @@
         </button>
         <div class="collapse navbar-collapse " id="navbarColor02">
             <ul class="navbar-nav me-auto ">
-
+                <!-- Se está logado mas não é chefe --> 
                 {% if user.is_authenticated and user.is_staff is False %}
                 <li class="nav-item " data-toggle="pill">
                     <a class="nav-link" href="{% url 'lira_boletim_list' %}">Boletins</a>
                 </li>
                 <li class="nav-item" data-toggle="pill">
                     <a class="nav-link" href="{% url 'ciclo' %}">Ciclos</a>
+                </li>
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="{% url 'rua_list' %}">Ruas</a>
                 </li>
                 </li>
                 <li class="nav-item" data-toggle="pill">
@@ -22,7 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="">Olá {{ user.username }}!</a>
                 </li>
-                
+                <!-- Se é chefe -->
                 {% elif user.is_authenticated and user.is_staff %}
                 <li class="nav-item " data-toggle="pill">
                     <a class="nav-link" href="{% url 'lira_boletim_list' %}">Boletins</a>
@@ -32,17 +35,21 @@
                 </li>
                 </li>
                 <li class="nav-item" data-toggle="pill">
-                    <a class="nav-link" href="/admin">Admin</a>
-                </li>                
+                    <a class="nav-link" href="{% url 'rua_list' %}">Ruas</a>
+                </li>              
                 <li class="nav-item" data-toggle="pill">
                     <a class="nav-link" href="{% url 'registrar' %}">registar Ace</a>
-                </li>                
+                </li>  
+                <li class="nav-item" data-toggle="pill">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
                 <li class="nav-item" data-toggle="pill">
                     <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
                 </li>                
                 <li class="nav-item">
                     <a class="nav-link" href="">Olá {{ user.username }}!</a>
                 </li>
+                <!-- Se não está logado -->
                 {% else %}
                 <li class="nav-item ">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>

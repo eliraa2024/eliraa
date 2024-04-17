@@ -10,8 +10,9 @@
     <h1>
         Olá {{ user.username }}. Este é o Ciclo {{ciclo}} 
     </h1>
-
+    {% if user.is_authenticated and user.is_superuser is True %}
     <a href="{% url 'indice_create' ciclo.id %}" class="btn btn-secondary"> Adicionar indice</a>
+    {% endif %}
     <a href="{% url 'mapa' ciclo.ciclo  %}" class="btn btn-success">Mapa de calor &rarr;</a>
 
     {% endif %}
@@ -23,6 +24,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Bairro</th>
                 <th scope="col">Indice</th>
+                <th scope="col">Opções</th>
 
             </tr>
         </thead>

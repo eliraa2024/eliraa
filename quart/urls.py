@@ -9,7 +9,12 @@ urlpatterns = [
     path('bairro/<int:pk>/update/',
          BairroUpdateView.as_view(), name='bairro_update'),
     path('bairro/<int:pk>/delete/',
-         BairroDeleteView.as_view(), name='bairro_delete'),
+         BairroDeleteView.as_view(), name='bairro_delete'), 
+    # Rua
+    path('rua/', RuaListView.as_view(), name='rua_list'),
+    path('rua/create/', RuaCreateView.as_view(), name='rua_create'),
+    path('rua/update/<int:pk>', RuaUpdateView.as_view(), name='rua_update'),
+    path('rua/delete/<int:pk>', RuaDeleteView.as_view(), name='rua_delete'),
     # Lira boetim
     path('lira-boletim/', LiraBoletimListView.as_view(), name='lira_boletim_list'),
     path('lira-boletim/create/', LiraBoletimCreateView.as_view(),

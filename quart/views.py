@@ -40,26 +40,26 @@ class BairroDeleteView(LoginRequiredMixin, DeleteView):
 
 class RuaListView(LoginRequiredMixin, ListView):
     model = Rua
-    template_name = 'rua_list.html'
+    template_name = 'rua/rua_list.html'
 
 
 class RuaCreateView(LoginRequiredMixin, CreateView):
     model = Rua
     fields = ['nome']
-    template_name = 'rua_form.html'
+    template_name = 'rua/rua_form.html'
     success_url = reverse_lazy('rua_list')
 
 
 class RuaUpdateView(LoginRequiredMixin, UpdateView):
     model = Rua
     fields = ['nome']
-    template_name = 'rua_form.html'
+    template_name = 'rua/rua_form.html'
     success_url = reverse_lazy('rua_list')
 
 
 class RuaDeleteView(LoginRequiredMixin, DeleteView):
     model = Rua
-    template_name = 'rua_confirm_delete.html'
+    template_name = 'rua/rua_confirm_delete.html'
     success_url = reverse_lazy('rua_list')
 
 
