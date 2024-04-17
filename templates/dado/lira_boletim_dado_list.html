@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="container ">
+<section class="container mt-2 ">
     <h2 class="text-uppercase text-center">Dados do Boletim : {{ boletim }} 
         <a class='btn btn-secondary' href="{% url 'lira_boletim_dado_create' pk  %}">Adicionar Dados no Boletim</a>
+        <a class='btn btn-success' href="{% url 'lira_boletim_list' %}">Voltar</a>
     </h2>
-    <strong>Bairro:</strong> {{ boletim.bairro }} <strong></strong>Extrato: {{boletim.extrato }}   
-    <strong>Numero de imóveis :</strong> {{ object_list.count }} <strong>Numero de tubitos :</strong> {{ tubitos_total }}   
-    <strong>Numero de quarteirões :</strong> {{ quarteiroes }}
+    <div class="container mt-4 ">
+        <strong>Bairro:</strong> {{ boletim.bairro }} <strong>Extrato:</strong> {{boletim.extrato }}
+        <strong>Numero de imóveis :</strong> {{ object_list.count }} <strong>Numero de quarteirões :</strong> {{ quarteiroes }}
+        <strong>Numero de tubitos :</strong> {{ tubitos_total }}
+        
+
+    </div>
+    
 
 </section>
 
-<div class="container">
+<div class="container mt-4">
     <table class="table table-striped">
         <caption>Dados do Boletim</caption>
         <thead class="thead-dark">

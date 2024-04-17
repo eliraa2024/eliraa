@@ -13,18 +13,22 @@
         <caption>Boletins</caption>
         <thead class="thead-dark">
             <tr>
+                <th scope="col">#</th>
                 <th scope="col">Boletim</th>
+                <th scope="col">Bairro</th>
                 <th scope="col">Ace</th>
                 <th scope="col">chefe</th>
                 <th scope="col">Modificado por</th>
-                <th scope="col">Criado</th>
+                <th scope="col">Criado em</th>
                 <th scope="col">Opções</th>
             </tr>
         </thead>
         <tbody>
             {% for lira_boletim in object_list %}
             <tr>
-                <th scope="row"><a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ forloop.counter }} {{ lira_boletim }}</a></th>                
+                <td>{{ forloop.counter }}</td>
+                <th scope="row"><a href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}">{{ lira_boletim }}</a></th>                
+                <td> {{ lira_boletim.bairro }}</td> 
                 <td> {{ lira_boletim.usuario }}</td> 
                 <td> {{ lira_boletim.chefe }}</td> 
                 <td>{{ lira_boletim.updated_by}}</td>
