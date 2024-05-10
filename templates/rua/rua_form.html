@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Registrar Ace{% endblock %}
+{% block title %}Create/Update Rua{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-auto mx-auto mt-2 ">
         <div class="card auth-card">
             <div class="card-body ">
-                <h2 class="card-title">Registrar Ace</h2>
+                <h2 class="card-title">Create/Update Rua</h2>
+                <h4>Nome da rua/avenida/travessa :</h4>
+                <p>Ex: Rua Manoel Elpidio, Av. Coronel Martiniano, Tv. Antônio Vieira</p>
                 <form method="post">
                     {% csrf_token %}
                     {{ form | crispy }}
-                    <button class="btn btn-success" type="submit">Sign Up</button>
+                    <button class="btn btn-success" type="submit">Salvar</button>
                 </form>
             
             </div>

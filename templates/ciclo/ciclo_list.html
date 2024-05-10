@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container ">
+    <h1 class="text-uppercase text-center">Lista de Ciclos</h1>
+    {% if user.is_authenticated and user.is_superuser is True %}
+    <a class='btn btn-secondary'  href="{% url 'ciclo_create' %}">Criar Ciclo</a>
+    {% endif %}
+</section>
+
+<div class="container">
+    <table class="table table-striped">
+        <caption>Ciclos</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Ciclo</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ciclo in object_list %}
+            <tr>                           
+                <td> {{ ciclo }}</td>
+                <td>
+                    <a type="submit" class="btn-sm btn-secondary" href="{% url 'indice' ciclo.id %}"
+                        method="POST">Detalhes</a>
+                    <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
+                    
+                </td>
+            </tr>
+            <!-- If object_list is empty -->
+            {% empty %}
+            <h1>No objects Find</h1>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

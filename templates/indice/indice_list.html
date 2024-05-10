@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    {% if user.is_anonymous %}
+    <h1>Você não está logado</h1>
+    {% else %}
+    <h1>
+        Olá {{ user.username }}. Este é o Ciclo {{ciclo}} 
+    </h1>
+    {% if user.is_authenticated and user.is_superuser is True %}
+    <a href="{% url 'indice_create' ciclo.id %}" class="btn btn-secondary"> Adicionar indice</a>
+    {% endif %}
+    <a href="{% url 'mapa' ciclo.ciclo  %}" class="btn btn-success">Mapa de calor &rarr;</a>
+
+    {% endif %}
+    <table class="table table-striped">
+        <caption>Indices</caption>
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">Id</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Indice</th>
+                <th scope="col">Opções</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in indices %}
+            <tr>
+
+                <td>{{ i.id}}</td>
+                <td>{{ i.bairro_nome}}</td>
+                <td>{{ i.indice_bairro }}</td>
+
+
+                <td>
+                    <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
+                    <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <h1>No objects Find</h1>
+            {% endfor %}
+
+        </tbody>
+    </table>    
+
+</div>
+
+{% endblock content %}

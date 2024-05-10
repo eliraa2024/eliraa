@@ -6,15 +6,15 @@
 <div>
     {% if user.is_authenticated %}
     <h1>
-        Hi {{ user.username }}!
-    
+        Seja bem vindo(a) {{ user.username }}!
+
     </h1>
     <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <button class="btn btn-warning" type="submit">Logout</button>
     </form>
     <p><a class="btn btn-info" href="{% url 'password_reset' %}">Reset Password</a></p>
-    
+
     {% else %}
     <h1>Você não está logado :</h1>
     <a class="btn btn-success" href="{% url 'login' %}">Login</a>
@@ -22,8 +22,8 @@
     <h1>Primeiro Acesso :</h1>
     <p><a class="btn btn-info" href="{% url 'password_reset' %}">Registrar</a></p>
     {% endif %}
-    
-    
+
+
 
 </div>
 

@@ -1,12 +1,49 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 
 {% block content %}
 
-<body>
+<style>
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
 
-    <div class="">
-        <h1 class="container text-center">Este sistema foi criado por Flavio.</h1>
+
+
+<header >
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading text-center">
+                    <h3 class=" site-heading my-4 mt- text-white "> Sobre </h3>
+
+                    <p>Sistema criado por Flavio dos Santos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<br>
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card auth-card">
+            <div class="card-body text-center">
+                <h4 class="card-title ">E-mail</h4>
+                <p>flaviovorthrox@yahoo.com.br</p>
+                <br>
+                <h4 class="card-title">Github</h4>
+                <a href="https://github.com/FlaviodosSantos">Flavio dos Santos</a>
+                <p></p>
+                <a href="{% url 'home' %}" class="btn btn-primary">Home</a>
+            </div>
+        </div>
+
+
     </div>
 
-</body>
-{% endblock %}
+</div>
+
+{% endblock content %}

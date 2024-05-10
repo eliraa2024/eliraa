@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div>
+    <div class="container">
+        <div>
+
+
+        </div>
+        <div>
+            <h2>Detalhes do boletim: {{boletim}}</h2>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+
+                    <th scope="col">Bairro</th>
+                    <th scope="col">Num de quart.</th>
+                    <th scope="col">Num de imov.</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Ace</th>
+                    <th scope="col">Chefe</th>
+                    <th scope="col">Modificado por</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <th scope="row">{{ boletim.bairro }}</th>
+                    <td>{{ boletim.num_quart}}</td>
+                    <td>{{ boletim.num_imoveis}}</td>
+                    <td>{{ boletim.data}}</td>
+                    <td>{{ boletim.usuario}}</td>
+                    <td>{{ boletim.chefe}}</td>
+                    <td>{{ boletim.updated_by}}</td>
+                    <td>
+                        <a type="submit" class="btn btn-secondary" href="{% url 'lira_boletim_update' pk %}"
+                            method="POST">Editar</a>
+                        <a type="submit" class="btn btn-danger" href="{% url 'lira_boletim_delete' pk %}"
+                            method="POST">Excluir</a>
+
+                    </td>
+                </tr>
+                <!-- If object_list is empty -->
+                
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
