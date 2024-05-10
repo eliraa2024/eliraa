@@ -115,7 +115,7 @@ TIME_ZONE = 'America/Fortaleza'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = False #para fornecer a hora do Brasil
 
 
 # Static files (CSS, JavaScript, Images)
@@ -131,8 +131,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+#EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+
+# configuração do envio de emails gmail
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'eliraa2024@gmail.com' # conta gmail remetente
+EMAIL_HOST_PASSWORD = 'dbhazndldguyfifq'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+#senha do app gmail = d b h a z n d l d g u y f i f q
