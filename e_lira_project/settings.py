@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-3zgjh&i)jif#5+0b+rhj^sy&d3+u5!@jl0%1^#(t%47k3pdw7*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['eliraa2024.pythonanywhere.com', '*']
 
 
 # Application definition
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'e_lira_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, "templates"],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,6 +123,12 @@ USE_TZ = False #para fornecer a hora do Brasil
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = Path(BASE_DIR / 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(BASE_DIR / 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -144,5 +151,3 @@ EMAIL_HOST_USER = 'eliraa2024@gmail.com' # conta gmail remetente
 EMAIL_HOST_PASSWORD = 'dbhazndldguyfifq'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-
-#senha do app gmail = d b h a z n d l d g u y f i f q
