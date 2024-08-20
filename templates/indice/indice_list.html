@@ -24,7 +24,10 @@
                 <th scope="col">Id</th>
                 <th scope="col">Bairro</th>
                 <th scope="col">Indice</th>
+                <!-- se o usuário for superuser -->
+                {% if user.is_superuser %}
                 <th scope="col">Opções</th>
+                {% endif %}
 
             </tr>
         </thead>
@@ -36,11 +39,13 @@
                 <td>{{ i.bairro_nome}}</td>
                 <td>{{ i.indice_bairro }}</td>
 
-
+                <!-- se o usuário for superuser -->
+                {% if user.is_superuser %}
                 <td>
                     <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
                     <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
                 </td>
+                {% endif %}
             </tr>
             {% empty %}
             <h1>No objects Find</h1>
