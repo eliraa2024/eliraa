@@ -34,6 +34,8 @@
                 <td>{{ lira_boletim.updated_by}}</td>
                 <td>{{ lira_boletim.created_at}}</td>
                 <td>
+                    <a type="submit" class="btn-sm btn-success" href="{% url 'lira_boletim_dado_list' lira_boletim.id_boletim %}"
+                        method="POST">Adicionar Dados</a>
                     <a type="submit" class="btn-sm btn-secondary" href="{% url 'liraboletim_detail' lira_boletim.id_boletim %}"
                         method="POST">Detalhes</a>
                     <a type="submit" class="btn-sm btn-warning" href="{% url 'lira_boletim_update' lira_boletim.id_boletim %}" method="POST">Editar</a>

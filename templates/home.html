@@ -1,9 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
+<head>
+    <style>
+        #body {
+            font-family: sans-serif;
+            background-color: #f7f7f7; /* background cinza */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background-color: #fff; /* background branco para o container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            margin: 20px auto; /* centraliza a imagem */
+        }
+
+        .message {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
 
 {% block content %}
-<div>
+<div class="container" style="
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <img src="media/logo_eliraa_300x300.png" alt="Imagem do site" class="image" 
+    style="width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    margin: 20px auto;">
+
     {% if user.is_authenticated %}
     <h1>
         Seja bem vindo(a) {{ user.username }}!
@@ -16,10 +76,10 @@
     <p><a class="btn btn-info" href="{% url 'password_reset' %}">Reset Password</a></p>
 
     {% else %}
-    <h1>Você não está logado :</h1>
+    <h3>Você não está logado :</h3>
     <a class="btn btn-success" href="{% url 'login' %}">Login</a>
-    <br><br><br>
-    <h1>Primeiro Acesso :</h1>
+    
+    <h3>Primeiro Acesso :</h3>
     <p><a class="btn btn-info" href="{% url 'password_reset' %}">Registrar</a></p>
     {% endif %}
 

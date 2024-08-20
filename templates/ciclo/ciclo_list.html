@@ -25,8 +25,11 @@
                 <td>
                     <a type="submit" class="btn-sm btn-secondary" href="{% url 'indice' ciclo.id %}"
                         method="POST">Detalhes</a>
+                    <!--
                     <a type="submit" class="btn-sm btn-warning" href="" method="POST">Editar</a>
                     <a type="submit" class="btn-sm btn-danger" href="" method="POST">Exluir</a>
+                    -->
+                    <a href="{% url 'mapa' ciclo.ciclo  %}" class="btn-sm btn-success">Mapa de calor &rarr;</a>
                     
                 </td>
             </tr>

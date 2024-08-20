@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Delete Bairro</h1>
-<p>Are you sure you want to delete "{{ object }}"?</p>
+<h1>Confirmação de Exclusão</h1>
+<p>Tem certeza que deseja excluir o bairro "{{ object }}"?</p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
+    <button type="submit" class="btn btn-danger">Excluir</button>
 </form>
 {% endblock %}
